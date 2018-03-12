@@ -5,4 +5,5 @@ package co.edu.uninorte.betit.database;
  */
 
 public class test {
+
 }
