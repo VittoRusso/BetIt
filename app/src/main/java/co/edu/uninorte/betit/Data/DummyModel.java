@@ -1,4 +1,4 @@
-package co.edu.uninorte.betit;
+package co.edu.uninorte.betit.Data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

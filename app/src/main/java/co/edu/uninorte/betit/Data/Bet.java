@@ -1,4 +1,4 @@
-package co.edu.uninorte.betit;
+package co.edu.uninorte.betit.Data;
 
 /**
  * Created by Visitante on 5/03/2018.

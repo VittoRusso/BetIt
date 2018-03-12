@@ -1,4 +1,4 @@
-package co.edu.uninorte.betit;
+package co.edu.uninorte.betit.Data;
 
 import java.util.Date;
 
