@@ -1,17 +1,19 @@
 package co.edu.uninorte.betit.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Visitante on 5/03/2018.
  */
 
-public class Match {
+public class Match  implements Serializable{
     Team[] teams;
     Date date;
     Boolean isOpen;
     String location;
     Integer[] result;
+    String test;
 
     int matchId;
 
@@ -22,6 +24,9 @@ public class Match {
         this.location = location;
         this.result = result;
         this.matchId = matchId;
+    }
+    public Match (String test){
+        this.test = test;
     }
 
     public Team[] getTeams() {
@@ -71,4 +76,8 @@ public class Match {
     public void setMatchId(int matchId) {
         this.matchId = matchId;
     }
+
+    public static Match[] matchesDef = new Match[] {
+        new Match("Hello"), new Match ("It me"), new Match("And i work")
+    };
 }

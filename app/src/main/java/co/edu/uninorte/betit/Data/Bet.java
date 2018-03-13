@@ -1,10 +1,12 @@
 package co.edu.uninorte.betit.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Visitante on 5/03/2018.
  */
 
-public class Bet {
+public class Bet implements Serializable{
     Integer[] guess;
     int matchId;
     int userId;

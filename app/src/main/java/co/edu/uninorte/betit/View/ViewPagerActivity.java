@@ -1,15 +1,13 @@
-package co.edu.uninorte.betit;
+package co.edu.uninorte.betit.View;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import co.edu.uninorte.betit.R;
 
 public class ViewPagerActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPagerItemFragment.FragmentPagerItemCallback {
 
@@ -17,7 +15,7 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
 
     private ViewPager pager;
 
-    private static final String[] pageTitles = {"matches","bets","profile"};
+    public static final String[] pageTitles = {"matches","bets","profile"};
 
 
     @Override
@@ -42,7 +40,7 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
         tabLayout.setBackgroundColor(ContextCompat.getColor(this,R.color.primary));
         tabLayout.addOnTabSelectedListener(this);
 
-        CustomAdapter adapter = new CustomAdapter(getSupportFragmentManager());
+        FragAdapter adapter = new FragAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
         tabLayout.addOnTabSelectedListener(this);
@@ -71,25 +69,5 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
     }
 
 
-    public static class CustomAdapter extends FragmentPagerAdapter {
 
-        public CustomAdapter (FragmentManager manager){
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return ViewPagerItemFragment.getInstance(pageTitles[position]);
-        }
-
-        @Override
-        public int getCount() {
-            return pageTitles.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position){
-            return pageTitles[position];
-        }
-    }
 }

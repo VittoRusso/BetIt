@@ -1,10 +1,14 @@
 package co.edu.uninorte.betit.Data;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Visitante on 5/03/2018.
  */
 
-public class User {
+public class User implements Serializable{
     int userId;
     int points;
     String firstName;
