@@ -3,4 +3,5 @@
     <string name="matches">Matches</string>
     <string name="bets">Bets</string>
     <string name="profile">Profile</string>
+    <string name="title_activity_match_detail">MatchDetailActivity</string>
 </resources>

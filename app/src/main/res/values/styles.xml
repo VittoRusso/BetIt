@@ -8,5 +8,41 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name = "Text">
+        <item name = "android:textSize">20dp</item>
+    </style>
+
+    <style name = "FloatingText">
+        <item name = "android:textSize">20dp</item>
+        <item name = "android:layout_marginTop">20dp</item>
+        <item name = "android:textAlignment">center</item>
+        <item name = "android:layout_alignParentStart">true</item>
+        <item name = "android:layout_width">match_parent</item>
+        <item name = "android:layout_height">wrap_content</item>
+    </style>
+
+    <style name = "Text.Primary">
+        <item name = "android:textSize">24dp</item>
+        <item name = "android:textColor">@color/primary_text</item>
+    </style>
+    <style name = "Text.Secondary">
+        <item name = "android:textSize">20dp</item>
+        <item name = "android:textColor">@color/secondary_text</item>
+    </style>
+    <style name = "Text.Primary.Bold">
+        <item name = "android:textSize">24dp</item>
+        <item name = "android:textColor">@color/primary_text</item>
+        <item name = "android:textStyle">bold</item>
+    </style>
+
 
 </resources>

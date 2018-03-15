@@ -1,4 +1,4 @@
-package co.edu.uninorte.betit.View;
+package co.edu.uninorte.betit.Tabs;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import co.edu.uninorte.betit.R;
+import co.edu.uninorte.betit.Tabs.ViewPagerItemFragment.FragmentPagerItemCallback;
 
-public class ViewPagerActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPagerItemFragment.FragmentPagerItemCallback {
+public class ViewPagerActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, FragmentPagerItemCallback,
+        MatchesFragment.MatchesFragmentCallback{
 
     private TabLayout tabLayout;
 
@@ -67,6 +69,8 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
     public void onPagerItemClick(String message) {
         Toast.makeText(this,message + "!",Toast.LENGTH_SHORT).show();
     }
+
+
 
 
 

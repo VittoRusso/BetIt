@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding = "16dp"
+    android:background="@drawable/background_box"
+    android:id = "@+id/root_list_match">
+
+    <TextView
+        android:id="@+id/team1_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="start"
+        android:text="Team 1"
+        style = "@style/Text.Primary"/>
+
+    <TextView
+        android:id="@+id/team1_score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="start"
+        android:text="-"
+        android:textAlignment="center"
+        style = "@style/Text.Secondary"/>
+
+    <TextView
+        android:id="@+id/team2_score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="end"
+        android:text="-"
+        android:textAlignment="center"
+        style = "@style/Text.Secondary"/>
+
+    <TextView
+        android:id="@+id/team2_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="Team 2"
+        style = "@style/Text.Primary"/>
+
+</LinearLayout>
