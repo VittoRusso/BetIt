@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.uninorte.betit.Recycle.MatchDetailActivity"
+    tools:context="co.edu.uninorte.betit.View.MatchDetailActivity"
     android:padding="16dp"
     android:id = "@+id/match_detail_rel">
 

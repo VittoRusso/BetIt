@@ -1,11 +1,8 @@
-package co.edu.uninorte.betit.Tabs;
+package co.edu.uninorte.betit.View;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-
-import static co.edu.uninorte.betit.Tabs.ViewPagerActivity.pageTitles;
 
 /**
  * Created by Gabriel on 13/03/2018.
@@ -22,21 +19,21 @@ public class FragAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0){
-            MatchesFragment matchesFragment = MatchesFragment.getInstance(pageTitles[position],"hola");
+            MatchesFragment matchesFragment = MatchesFragment.getInstance(ViewPagerActivity.pageTitles[position],"hola");
             return matchesFragment;
         }else {
-            ViewPagerItemFragment fragment = ViewPagerItemFragment.getInstance(pageTitles[position]);
+            ViewPagerItemFragment fragment = ViewPagerItemFragment.getInstance(ViewPagerActivity.pageTitles[position]);
             return fragment;
         }
     }
 
     @Override
     public int getCount() {
-        return pageTitles.length;
+        return ViewPagerActivity.pageTitles.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position){
-        return pageTitles[position];
+        return ViewPagerActivity.pageTitles[position];
     }
 }
