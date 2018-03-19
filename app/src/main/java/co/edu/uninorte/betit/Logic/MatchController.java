@@ -26,6 +26,9 @@ public class MatchController {
     }
 
     public void onListItemClick(Match testMatch){
-        matchView.startMatchDetailActivity(testMatch.getTeams(), testMatch.getDate(),testMatch.getLocation());
+        matchView.startMatchDetailActivity(
+                testMatch.getTeams(),
+                testMatch.getDate(),
+                testMatch.getLocation());
     }
 }
