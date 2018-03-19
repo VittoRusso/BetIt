@@ -2,14 +2,17 @@ package co.edu.uninorte.betit.View;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -104,7 +107,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     public void startMatchDetailActivity(Team[] teams, String date, String location) {
         Intent i = new Intent (this.getContext(), MatchDetailActivity.class);
 
-        //Es mejor pasar el id unico 
+        //Es mejor pasar el id unico
         i.putExtra(EXTRA_TEAMS,teams);
         i.putExtra(EXTRA_DATE,date);
         i.putExtra(EXTRA_LOCATION,location);
@@ -115,8 +118,12 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     public void setUpAdapterAndView(List<Match> matches) {
         this.matches = matches;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this.getContext(),LinearLayoutManager.VERTICAL));
         matchAdapter = new MatchAdapter();
         recyclerView.setAdapter(matchAdapter);
+
+        
+
     }
 
 
@@ -145,6 +152,13 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             holder.team2text.setText(
                     currentMatch.getTeams()[1].toString()
             );
+
+            holder.team1flag.setBackgroundResource(
+                    currentMatch.getTeams()[0].getImage()
+            );
+            holder.team2flag.setBackgroundResource(
+                    currentMatch.getTeams()[1].getImage()
+            );
         }
 
         @Override
@@ -157,6 +171,8 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             private TextView team1text;
             private TextView team2text;
             private ViewGroup container;
+            private ImageView team1flag;
+            private ImageView team2flag;
 
 
             public CustomViewHolder(View matchView){
@@ -165,7 +181,8 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 this.team1text = matchView.findViewById(R.id.team1_text);
                 this.team2text = matchView.findViewById(R.id.team2_text);
                 this.container = matchView.findViewById(R.id.root_list_match);
-
+                this.team1flag = matchView.findViewById(R.id.team1_flag);
+                this.team2flag = matchView.findViewById(R.id.team2_flag);
                 this.container.setOnClickListener(this);
             }
 

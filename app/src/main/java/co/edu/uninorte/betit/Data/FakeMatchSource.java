@@ -2,6 +2,7 @@ package co.edu.uninorte.betit.Data;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -52,6 +53,7 @@ public class FakeMatchSource implements MatchInterface {
             matches.add(match);
 
         }
+        Collections.sort(matches);
         return matches;
     }
 }
