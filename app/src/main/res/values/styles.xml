@@ -44,5 +44,11 @@
         <item name = "android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Accent">
+        <item name = "android:textSize">12sp</item>
+        <item name = "android:textColor">@color/accent</item>
+        <item name = "android:textStyle">italic</item>
+    </style>
+
 
 </resources>

@@ -12,14 +12,14 @@ import java.util.Random;
 
 public class FakeMatchSource implements MatchInterface {
 
-    private static final int sizeOfCollection = 12;
+    private static final int sizeOfCollection = 20;
 
     private final  String[] locations  = {
       "Moscow","Saint Petersburg","Novosibirsk","Yekaterinburg"
     };
 
     private final String[] dates = {
-          "15/03/2018","16/03/2018","17/03/2018","18/03/2018"
+          "15/03/2018","16/03/2018","17/03/2018","18/03/2018","20/03/2018"
     };
 
     private final Team[][] teams= {
@@ -40,7 +40,7 @@ public class FakeMatchSource implements MatchInterface {
         for (int i = 0; i < sizeOfCollection; i++) {
 
             int rand1 = random.nextInt(4);
-            int rand2 = random.nextInt(4);
+            int rand2 = random.nextInt(5);
             int rand3 = random.nextInt(4);
             int rand4 = random.nextInt(1000);
 

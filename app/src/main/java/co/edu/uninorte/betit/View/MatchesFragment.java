@@ -9,11 +9,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -159,6 +162,22 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             holder.team2flag.setBackgroundResource(
                     currentMatch.getTeams()[1].getImage()
             );
+
+            holder.dateText.setText(
+                    currentMatch.getDate()
+            );
+
+//            if (position> 0 && holder.dateText.getText() == matches.get(position-1).getDate()){
+//                holder.dateText.setVisibility(View.INVISIBLE);
+//                ViewGroup.LayoutParams params = holder.container.getLayoutParams();
+//                params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72, getResources().getDisplayMetrics());
+//                holder.container.setLayoutParams(params);
+//            } else if (position == 0){
+//                holder.dateText.setVisibility(View.VISIBLE);
+//                ViewGroup.LayoutParams params = holder.container.getLayoutParams();
+//                params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
+//                holder.container.setLayoutParams(params);
+//            }
         }
 
         @Override
@@ -173,6 +192,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             private ViewGroup container;
             private ImageView team1flag;
             private ImageView team2flag;
+            private TextView dateText;
 
 
             public CustomViewHolder(View matchView){
@@ -183,6 +203,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 this.container = matchView.findViewById(R.id.root_list_match);
                 this.team1flag = matchView.findViewById(R.id.team1_flag);
                 this.team2flag = matchView.findViewById(R.id.team2_flag);
+                this.dateText  = matchView.findViewById(R.id.dateText);
                 this.container.setOnClickListener(this);
             }
 
