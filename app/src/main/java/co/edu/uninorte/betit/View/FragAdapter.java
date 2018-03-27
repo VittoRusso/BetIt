@@ -19,7 +19,7 @@ public class FragAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0){
-            MatchesFragment matchesFragment = MatchesFragment.getInstance(ViewPagerActivity.pageTitles[position],"hola");
+            MatchesFragment matchesFragment = MatchesFragment.getInstance(ViewPagerActivity.pageTitles[position]);
             return matchesFragment;
         }else {
             ViewPagerItemFragment fragment = ViewPagerItemFragment.getInstance(ViewPagerActivity.pageTitles[position]);

@@ -1,11 +1,16 @@
 
 package co.edu.uninorte.betit.model;
 
+import android.support.annotation.NonNull;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Match {
+public class Match implements Comparable<Match>{
 
     @SerializedName("name")
     @Expose
@@ -118,4 +123,20 @@ public class Match {
         this.finished = finished;
     }
 
+    @Override
+    public int compareTo(@NonNull Match match) {
+        return date2Str().compareTo(match.date2Str());
+    }
+
+    private Date date2Str() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ");
+        try {
+            Date true_date = format.parse(this.date);
+            return true_date;
+        } catch (ParseException e){
+            e.printStackTrace();
+            Date true_date = null;
+            return true_date;
+        }
+    };
 }

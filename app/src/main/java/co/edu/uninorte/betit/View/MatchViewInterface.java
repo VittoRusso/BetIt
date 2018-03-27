@@ -13,6 +13,6 @@ public interface MatchViewInterface {
 
     void startMatchDetailActivity(Team[] teams, String date, String location);
 
-    void setUpAdapterAndView(List<Match> matches);
+    void setUpAdapterAndView(List<co.edu.uninorte.betit.model.Match> matches);
 
 }

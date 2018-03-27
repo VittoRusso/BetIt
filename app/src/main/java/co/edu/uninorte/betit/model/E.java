@@ -9,13 +9,13 @@ public class E {
 
     @SerializedName("matches")
     @Expose
-    private List<Match____> matches = null;
+    private List<Match> matches = null;
 
-    public List<Match____> getMatches() {
+    public List<Match> getMatches() {
         return matches;
     }
 
-    public void setMatches(List<Match____> matches) {
+    public void setMatches(List<Match> matches) {
         this.matches = matches;
     }
 
