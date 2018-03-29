@@ -138,5 +138,11 @@ public class Match implements Comparable<Match>{
             Date true_date = null;
             return true_date;
         }
-    };
+    }
+
+    public String getSimpleDate() {
+        Date true_date = date2Str();
+        String simpledate = new SimpleDateFormat("dd/MM/yyyy").format(true_date);
+        return simpledate;
+    }
 }

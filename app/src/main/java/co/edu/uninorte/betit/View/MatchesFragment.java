@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,8 @@ import java.util.List;
 
 import co.edu.uninorte.betit.Data.Team;
 import co.edu.uninorte.betit.R;
+import co.edu.uninorte.betit.model.JsonData;
+import co.edu.uninorte.betit.model.Match;
 import co.edu.uninorte.betit.viewmodel.JsonDataViewModel;
 import co.edu.uninorte.betit.BetItApplication;
 
@@ -30,8 +33,6 @@ import co.edu.uninorte.betit.BetItApplication;
 public class MatchesFragment extends Fragment implements MatchViewInterface{
 
     private static final String PAGE_TITLE = "PAGE_TITLE";
-
-
 
     private static final String EXTRA_TEAMS = "EXTRA_TEAMS";
     private static final String EXTRA_DATE = "EXTRA_DATE";
@@ -48,9 +49,6 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
 
 
     JsonDataViewModel viewModel;
-
-   ;
-
 
     public MatchesFragment(){}
 
@@ -95,17 +93,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             }
             this.teams = teams;
 
-            List<co.edu.uninorte.betit.model.Match> matches = new ArrayList();
-            matches.addAll(liveData.getGroups().getA().getMatches());
-            matches.addAll(liveData.getGroups().getB().getMatches());
-            matches.addAll(liveData.getGroups().getC().getMatches());
-            matches.addAll(liveData.getGroups().getD().getMatches());
-            matches.addAll(liveData.getGroups().getE().getMatches());
-            matches.addAll(liveData.getGroups().getF().getMatches());
-            matches.addAll(liveData.getGroups().getG().getMatches());
-            matches.addAll(liveData.getGroups().getH().getMatches());
-
-            Collections.sort(matches);
+            List<co.edu.uninorte.betit.model.Match> matches = createListOfMatches(liveData);
 
             setUpAdapterAndView(matches);
 
@@ -114,6 +102,22 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
         });
     }
 
+    private List<Match> createListOfMatches(JsonData liveData) {
+        List<co.edu.uninorte.betit.model.Match> matches = new ArrayList();
+
+
+        matches.addAll(liveData.getGroups().getA().getMatches());
+        matches.addAll(liveData.getGroups().getB().getMatches());
+        matches.addAll(liveData.getGroups().getC().getMatches());
+        matches.addAll(liveData.getGroups().getD().getMatches());
+        matches.addAll(liveData.getGroups().getE().getMatches());
+        matches.addAll(liveData.getGroups().getF().getMatches());
+        matches.addAll(liveData.getGroups().getG().getMatches());
+        matches.addAll(liveData.getGroups().getH().getMatches());
+
+        Collections.sort(matches);
+        return matches;
+    }
 
 
     @Override
@@ -191,7 +195,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             );
 
             holder.dateText.setText(
-                    currentMatch.getDate()
+                    currentMatch.getSimpleDate()
             );
 
 //            if (position> 0 && holder.dateText.getText() == matches.get(position-1).getDate()){
@@ -237,6 +241,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 co.edu.uninorte.betit.model.Match match = matches.get(
                         this.getAdapterPosition()
                 );
+                Toast.makeText(getContext(), match.getDate(),Toast.LENGTH_SHORT).show();
             }
         }
     }
