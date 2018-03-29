@@ -12,7 +12,7 @@ public class Round2 {
     private String name;
     @SerializedName("matches")
     @Expose
-    private List<Match> matches = null;
+    private List<Match_> matches = null;
 
     public String getName() {
         return name;
@@ -22,11 +22,11 @@ public class Round2 {
         this.name = name;
     }
 
-    public List<Match> getMatches() {
+    public List<Match_> getMatches() {
         return matches;
     }
 
-    public void setMatches(List<Match> matches) {
+    public void setMatches(List<Match_> matches) {
         this.matches = matches;
     }
 

@@ -34,9 +34,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
 
     private static final String PAGE_TITLE = "PAGE_TITLE";
 
-    private static final String EXTRA_TEAMS = "EXTRA_TEAMS";
-    private static final String EXTRA_DATE = "EXTRA_DATE";
-    private static final String EXTRA_LOCATION = "EXTRA_LOCATION";
+    private static final String MATCH_ID = "MATCH_ID" ;
 
     private List<co.edu.uninorte.betit.model.Match> matches;
     private List<String> teams;
@@ -147,13 +145,11 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     }
 
     @Override
-    public void startMatchDetailActivity(Team[] teams, String date, String location) {
+    public void startMatchDetailActivity(Match match) {
         Intent i = new Intent (this.getContext(), MatchDetailActivity.class);
 
-        //Es mejor pasar el id unico
-        i.putExtra(EXTRA_TEAMS,teams);
-        i.putExtra(EXTRA_DATE,date);
-        i.putExtra(EXTRA_LOCATION,location);
+        i.putExtra(MATCH_ID, match.getName());
+
         startActivity(i);
     }
 
@@ -241,7 +237,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 co.edu.uninorte.betit.model.Match match = matches.get(
                         this.getAdapterPosition()
                 );
-                Toast.makeText(getContext(), match.getDate(),Toast.LENGTH_SHORT).show();
+
             }
         }
     }

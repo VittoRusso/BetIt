@@ -48,6 +48,7 @@ public class JsonDataViewModel extends AndroidViewModel{
             @Override
             public void onFailure(Call<JsonData> call, Throwable t) {
                 Log.d("Json: ","Call onFailure");
+                Log.d("Json: ", t.toString());
             }
         });
     }
