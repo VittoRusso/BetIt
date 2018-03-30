@@ -3,6 +3,7 @@ package co.edu.uninorte.betit.model;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Match implements Comparable<Match>{
+public class Match implements Comparable<Match>, Serializable{
 
     @SerializedName("name")
     @Expose

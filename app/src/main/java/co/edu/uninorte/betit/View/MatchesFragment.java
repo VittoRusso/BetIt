@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +36,10 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     private static final String PAGE_TITLE = "PAGE_TITLE";
 
     private static final String MATCH_ID = "MATCH_ID" ;
+    private static final String MATCHES = "MATCHES" ;
+
+
+
 
     private List<co.edu.uninorte.betit.model.Match> matches;
     private List<String> teams;
@@ -95,8 +100,6 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
 
             setUpAdapterAndView(matches);
 
-
-
         });
     }
 
@@ -149,6 +152,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
         Intent i = new Intent (this.getContext(), MatchDetailActivity.class);
 
         i.putExtra(MATCH_ID, match.getName());
+        i.putExtra(MATCHES, (Serializable) this.matches);
 
         startActivity(i);
     }
@@ -193,18 +197,6 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             holder.dateText.setText(
                     currentMatch.getSimpleDate()
             );
-
-//            if (position> 0 && holder.dateText.getText() == matches.get(position-1).getDate()){
-//                holder.dateText.setVisibility(View.INVISIBLE);
-//                ViewGroup.LayoutParams params = holder.container.getLayoutParams();
-//                params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72, getResources().getDisplayMetrics());
-//                holder.container.setLayoutParams(params);
-//            } else if (position == 0){
-//                holder.dateText.setVisibility(View.VISIBLE);
-//                ViewGroup.LayoutParams params = holder.container.getLayoutParams();
-//                params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
-//                holder.container.setLayoutParams(params);
-//            }
         }
 
         @Override
@@ -237,6 +229,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 co.edu.uninorte.betit.model.Match match = matches.get(
                         this.getAdapterPosition()
                 );
+                startMatchDetailActivity(match);
 
             }
         }
