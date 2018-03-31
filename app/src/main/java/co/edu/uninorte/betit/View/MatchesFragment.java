@@ -148,10 +148,10 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     }
 
     @Override
-    public void startMatchDetailActivity(Match match) {
+    public void startMatchDetailActivity(int index) {
         Intent i = new Intent (this.getContext(), MatchDetailActivity.class);
 
-        i.putExtra(MATCH_ID, match.getName());
+        i.putExtra(MATCH_ID, index);
         i.putExtra(MATCHES, (Serializable) this.matches);
 
         startActivity(i);
@@ -226,10 +226,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
 
             @Override
             public void onClick(View view) {
-                co.edu.uninorte.betit.model.Match match = matches.get(
-                        this.getAdapterPosition()
-                );
-                startMatchDetailActivity(match);
+                startMatchDetailActivity(this.getAdapterPosition());
 
             }
         }

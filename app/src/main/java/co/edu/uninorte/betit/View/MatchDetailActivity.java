@@ -85,8 +85,8 @@ public class MatchDetailActivity extends AppCompatActivity {
         viewModel.getLiveData().observe(this, liveData -> {
 
             dataJson = liveData;
-            this.homeTeam = liveData.getTeams().get(matches.get(match_id-1).getHomeTeam()-1).getName();
-            this.awayTeam = liveData.getTeams().get(matches.get(match_id-1).getAwayTeam()-1).getName();
+            this.homeTeam = liveData.getTeams().get(matches.get(match_id).getHomeTeam()-1).getName();
+            this.awayTeam = liveData.getTeams().get(matches.get(match_id).getAwayTeam()-1).getName();
 
 
             setContentView(new RenderableView(this) {
@@ -192,6 +192,13 @@ public class MatchDetailActivity extends AppCompatActivity {
                             onClick(v-> Submit());
                         });
 
+                        textView(()-> {
+                            size(MATCH,WRAP);
+                            textSize(dip(24));
+                            gravity(CENTER_HORIZONTAL);
+                            text("Count of bets: "+ betmodel.getBets().getValue().size());
+                        });
+
 
                     });
                 }
@@ -210,8 +217,10 @@ public class MatchDetailActivity extends AppCompatActivity {
         bet.setUser("AquiVaElUser");
         bet.setDate("idk");//idk
         bet.setStadium(1);//idk
+        bet.setBet(true);
         bet.setFinished(true);
         betmodel.addBet(bet);
+        finish();
     }
 
     public int Decrease (int num){

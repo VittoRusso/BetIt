@@ -74,6 +74,19 @@ public class Match implements Comparable<Match>, Serializable{
     @ColumnInfo(name = "finished")
     private boolean finished;
 
+    @SerializedName("isBet")
+    @Expose
+    @ColumnInfo(name = "isbet")
+    private boolean isBet;
+
+
+    public boolean isBet() {
+        return isBet;
+    }
+
+    public void setBet(boolean bet) {
+        isBet = bet;
+    }
 
     public String getUser() { return user; }
 

@@ -11,7 +11,7 @@ import co.edu.uninorte.betit.Data.Team;
 
 public interface MatchViewInterface {
 
-    void startMatchDetailActivity(co.edu.uninorte.betit.model.Match match);
+    void startMatchDetailActivity(int index);
 
     void setUpAdapterAndView(List<co.edu.uninorte.betit.model.Match> matches);
 
