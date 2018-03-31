@@ -24,6 +24,7 @@ import java.util.List;
 import co.edu.uninorte.betit.R;
 import co.edu.uninorte.betit.model.JsonData;
 import co.edu.uninorte.betit.model.Match;
+import co.edu.uninorte.betit.model.Stadium;
 import co.edu.uninorte.betit.viewmodel.JsonDataViewModel;
 import co.edu.uninorte.betit.BetItApplication;
 
@@ -37,12 +38,16 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
 
     private static final String MATCH_ID = "MATCH_ID" ;
     private static final String MATCHES = "MATCHES" ;
+    private static final String MATCH_ = "MATCH";
+    private static final String TEAMS = "TEAMS";
+    private static final String STADIUMS = "STADIUMS";
 
 
     private HashMap<Integer, Integer>  flags;
 
     private List<co.edu.uninorte.betit.model.Match> matches;
     private List<String> teams;
+    private List<String> stadiums;
 
 
     private LayoutInflater layoutInflater;
@@ -92,6 +97,11 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 teams.add(team.getName());
             }
             this.teams = teams;
+            List<String> stadiums = new ArrayList();
+            for (Stadium stadium: liveData.getStadiums()){
+                stadiums.add(stadium.getName());
+            }
+            this.stadiums = stadiums;
 
             List<co.edu.uninorte.betit.model.Match> matches = createListOfMatches(liveData);
 
@@ -142,6 +152,11 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
 
         i.putExtra(MATCH_ID, index);
         i.putExtra(MATCHES, (Serializable) this.matches);
+
+        i.putExtra(MATCH_, this.matches.get(index));
+        i.putExtra(TEAMS, (Serializable) this.teams);
+        i.putExtra(STADIUMS, (Serializable)this.stadiums);
+
 
         startActivity(i);
     }

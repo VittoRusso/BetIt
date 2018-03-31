@@ -28,6 +28,8 @@ public class MatchDetailActivity extends AppCompatActivity {
 
     private int match_id;
     private List<Match> matches;
+    private List<String> teams;
+    private List<String> stadiums;
 
     private String homeTeam;
     private String awayTeam;
@@ -35,6 +37,13 @@ public class MatchDetailActivity extends AppCompatActivity {
 
     private int homeScore = 0;
     private int awayScore = 0;
+
+    private static final String MATCH_ = "MATCH";
+    private static final String TEAMS = "TEAMS";
+    private static final String STADIUMS = "STADIUMS";
+
+    private Match match;
+    private int betNo;
 
 
     //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
@@ -51,6 +60,11 @@ public class MatchDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         match_id = i.getIntExtra(MATCH_ID,1);
         matches = (List<Match>) i.getSerializableExtra(MATCHES);
+        teams = (List<String>) i.getSerializableExtra(TEAMS);
+        stadiums = (List<String>) i.getSerializableExtra(STADIUMS);
+
+        match = (Match) i.getSerializableExtra(MATCH_);
+
 
 
         //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
@@ -58,9 +72,10 @@ public class MatchDetailActivity extends AppCompatActivity {
         betmodel = ViewModelProviders.of(this).get(BetViewModel.class);
         betmodel.getBets().observe(this, bets ->{
             data = bets;
+            betNo = bets.size();
             // Lo que se te venga en ganas
             Log.d("BetDatabase","Increment");
-        });
+
         //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
         //Para Agregar a la base de datos
         //betmodel.addBet(new Match());
@@ -72,11 +87,11 @@ public class MatchDetailActivity extends AppCompatActivity {
         //Es lo mismo que agregar nada mas coges el objeto y lo agregas con el mismo primary key
         //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
 
-        viewModel = ViewModelProviders.of(this).get(JsonDataViewModel.class);
-        viewModel.getLiveData().observe(this, liveData -> {
 
-            this.homeTeam = liveData.getTeams().get(matches.get(match_id).getHomeTeam()-1).getName();
-            this.awayTeam = liveData.getTeams().get(matches.get(match_id).getAwayTeam()-1).getName();
+
+
+        this.homeTeam = teams.get(match.getHomeTeam()-1);
+        this.awayTeam = teams.get(match.getAwayTeam()-1);
 
 
             setContentView(new RenderableView(this) {
@@ -186,7 +201,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                             size(MATCH,WRAP);
                             textSize(dip(24));
                             gravity(CENTER_HORIZONTAL);
-                            text("Count of bets: "+ betmodel.getBets().getValue().size());
+                            text("Number of bets: " + betNo);
                         });
                     });
                 }
