@@ -1,24 +1,16 @@
 package co.edu.uninorte.betit.View;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.util.List;
 
-import co.edu.uninorte.betit.Data.Team;
 import co.edu.uninorte.betit.R;
-import co.edu.uninorte.betit.model.JsonData;
 import co.edu.uninorte.betit.model.Match;
 import co.edu.uninorte.betit.viewmodel.BetViewModel;
 import co.edu.uninorte.betit.viewmodel.JsonDataViewModel;
@@ -33,14 +25,13 @@ public class MatchDetailActivity extends AppCompatActivity {
     private static final String MATCHES = "MATCHES" ;
 
     private JsonDataViewModel viewModel;
-    private JsonData dataJson;
 
     private int match_id;
     private List<Match> matches;
+
     private String homeTeam;
     private String awayTeam;
 
-    private RenderableView view;
 
     private int homeScore = 0;
     private int awayScore = 0;
@@ -84,7 +75,6 @@ public class MatchDetailActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(JsonDataViewModel.class);
         viewModel.getLiveData().observe(this, liveData -> {
 
-            dataJson = liveData;
             this.homeTeam = liveData.getTeams().get(matches.get(match_id).getHomeTeam()-1).getName();
             this.awayTeam = liveData.getTeams().get(matches.get(match_id).getAwayTeam()-1).getName();
 
@@ -137,7 +127,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                                     textSize(dip(24));
                                     text("-");
                                     textAlignment(TEXT_ALIGNMENT_CENTER);
-                                    onClick(v-> homeScore = Decrease(homeScore));
+                                    onClick(v-> homeScore = (homeScore>0) ? homeScore-1 : homeScore);
                                 });
                             });
 
@@ -175,7 +165,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                                     textSize(dip(24));
                                     text("-");
                                     textAlignment(TEXT_ALIGNMENT_CENTER);
-                                    onClick(v-> awayScore = Decrease(awayScore));
+                                    onClick(v-> awayScore = (awayScore> 0)? awayScore-1 : awayScore);
                                 });
                             });
 
@@ -198,35 +188,28 @@ public class MatchDetailActivity extends AppCompatActivity {
                             gravity(CENTER_HORIZONTAL);
                             text("Count of bets: "+ betmodel.getBets().getValue().size());
                         });
-
-
                     });
                 }
             });
-
-
         });
     }
 
     private void Submit() {
+        Match current_match = matches.get(match_id);
+
         Match bet = new Match();
-        bet.setHomeTeam(matches.get(match_id-1).getHomeTeam()-1);
-        bet.setAwayTeam(matches.get(match_id-1).getAwayTeam()-1);
+        bet.setHomeTeam(current_match.getHomeTeam()-1);
+        bet.setAwayTeam(current_match.getAwayTeam()-1);
         bet.setHomeResult(homeScore);
         bet.setAwayResult(awayScore);
-        bet.setUser("AquiVaElUser");
-        bet.setDate("idk");//idk
-        bet.setStadium(1);//idk
+        bet.setUser("1");
+        bet.setDate(current_match.getDate());
+        bet.setStadium(current_match.getStadium());//idk
         bet.setBet(true);
         bet.setFinished(true);
         betmodel.addBet(bet);
         finish();
+        Toast.makeText(getApplicationContext(), "Bet placed.",Toast.LENGTH_SHORT).show();
     }
 
-    public int Decrease (int num){
-        if (num>0){
-            num--;
-        }
-        return num;
-    }
 }

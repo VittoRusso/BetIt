@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/team1_score"
-        style="@style/Text.Secondary"
+        style="@style/Text.Accent.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -62,7 +62,7 @@
 
     <TextView
         android:id="@+id/team2_score"
-        style="@style/Text.Secondary"
+        style="@style/Text.Accent.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

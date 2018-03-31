@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import co.edu.uninorte.betit.R;
 
-public class ViewPagerActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPagerItemFragment.FragmentPagerItemCallback,
-        MatchesFragment.MatchesFragmentCallback{
+public class ViewPagerActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPagerItemFragment.FragmentPagerItemCallback{
 
     private TabLayout tabLayout;
 
