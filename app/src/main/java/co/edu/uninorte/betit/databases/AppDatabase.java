@@ -9,11 +9,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import co.edu.uninorte.betit.dao.BetsDao;
+import co.edu.uninorte.betit.dao.UserDao;
 import co.edu.uninorte.betit.model.Match;
+import co.edu.uninorte.betit.model.User;
 
-@Database(entities = {Match.class}, version = 1)
+@Database(entities = {Match.class, User.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase{
+
    public abstract BetsDao betsDao();
+   public abstract UserDao userDao();
 
     private static AppDatabase INSTANCE;
 

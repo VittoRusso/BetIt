@@ -4,4 +4,7 @@
     <string name="bets">Bets</string>
     <string name="profile">Profile</string>
     <string name="title_activity_match_detail">MatchDetailActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

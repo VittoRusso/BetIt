@@ -3,6 +3,7 @@ package co.edu.uninorte.betit.dependencyinjection;
 
 import javax.inject.Singleton;
 
+import co.edu.uninorte.betit.View.LoginFragment;
 import co.edu.uninorte.betit.View.MatchesFragment;
 import dagger.Component;
 
@@ -11,4 +12,6 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     void inject(MatchesFragment matchesFragment);
+
+    void inject(LoginFragment loginFragment);
 }
