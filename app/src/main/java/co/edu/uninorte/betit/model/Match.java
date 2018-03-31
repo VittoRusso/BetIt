@@ -1,6 +1,10 @@
 
 package co.edu.uninorte.betit.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
@@ -11,38 +15,73 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Match implements Comparable<Match>, Serializable{
+
+    @PrimaryKey(autoGenerate = true)
+    private  int uid;
 
     @SerializedName("name")
     @Expose
     private int name;
+
+    @SerializedName("user")
+    @Expose
+    @ColumnInfo(name = "user")
+    private String user;
+
     @SerializedName("type")
     @Expose
     private String type;
+
     @SerializedName("home_team")
     @Expose
+    @ColumnInfo(name = "homeTeam")
     private int homeTeam;
+
     @SerializedName("away_team")
     @Expose
+    @ColumnInfo(name = "awayTeam")
     private int awayTeam;
+
     @SerializedName("home_result")
     @Expose
-    private Object homeResult;
+    @ColumnInfo(name = "homeResult")
+    private int homeResult;
+
     @SerializedName("away_result")
     @Expose
-    private Object awayResult;
+    @ColumnInfo(name = "awayResult")
+    private int awayResult;
+
     @SerializedName("date")
     @Expose
+    @ColumnInfo(name = "date")
     private String date;
+
     @SerializedName("stadium")
     @Expose
+    @ColumnInfo(name = "stadium")
     private int stadium;
+
     @SerializedName("channels")
     @Expose
+    @Ignore
     private List<Object> channels = null;
+
     @SerializedName("finished")
     @Expose
+    @ColumnInfo(name = "finished")
     private boolean finished;
+
+
+    public String getUser() { return user; }
+
+    public void setUser(String user) { this.user = user; }
+
+    public int getUid() { return uid; }
+
+    public void setUid(int uid) { this.uid = uid; }
 
     public int getName() {
         return name;
@@ -76,19 +115,17 @@ public class Match implements Comparable<Match>, Serializable{
         this.awayTeam = awayTeam;
     }
 
-    public Object getHomeResult() {
+    public int getHomeResult() {
         return homeResult;
     }
 
-    public void setHomeResult(Object homeResult) {
+    public void setHomeResult(int homeResult) {
         this.homeResult = homeResult;
     }
 
-    public Object getAwayResult() {
-        return awayResult;
-    }
+    public int getAwayResult() { return awayResult; }
 
-    public void setAwayResult(Object awayResult) {
+    public void setAwayResult(int awayResult) {
         this.awayResult = awayResult;
     }
 
@@ -116,9 +153,7 @@ public class Match implements Comparable<Match>, Serializable{
         this.channels = channels;
     }
 
-    public boolean isFinished() {
-        return finished;
-    }
+    public boolean isFinished() { return finished; }
 
     public void setFinished(boolean finished) {
         this.finished = finished;
