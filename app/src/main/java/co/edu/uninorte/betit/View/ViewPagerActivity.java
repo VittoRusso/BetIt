@@ -7,7 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import java.util.List;
+
 import co.edu.uninorte.betit.R;
+import co.edu.uninorte.betit.model.Match;
 
 public class ViewPagerActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPagerItemFragment.FragmentPagerItemCallback{
 
@@ -16,6 +19,7 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
     private ViewPager pager;
 
     public static final String[] pageTitles = {"matches","bets","profile"};
+
 
 
     @Override
@@ -42,6 +46,7 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
 
         FragAdapter adapter = new FragAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(pager);
         tabLayout.addOnTabSelectedListener(this);
     }

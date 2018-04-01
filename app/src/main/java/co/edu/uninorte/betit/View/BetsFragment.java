@@ -1,7 +1,5 @@
 package co.edu.uninorte.betit.View;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -22,19 +20,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import co.edu.uninorte.betit.BetItApplication;
 import co.edu.uninorte.betit.R;
 import co.edu.uninorte.betit.model.JsonData;
 import co.edu.uninorte.betit.model.Match;
 import co.edu.uninorte.betit.model.Stadium;
+import co.edu.uninorte.betit.viewmodel.BetViewModel;
 import co.edu.uninorte.betit.viewmodel.JsonDataViewModel;
-import co.edu.uninorte.betit.BetItApplication;
 
 /**
  * Created by Gabriel on 11/03/2018.
  */
 
-public class MatchesFragment extends Fragment implements MatchViewInterface{
+public class BetsFragment extends Fragment implements MatchViewInterface{
 
     private static final String PAGE_TITLE = "PAGE_TITLE";
 
@@ -57,13 +57,15 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     private MatchAdapter matchAdapter;
 
     JsonDataViewModel viewModel;
+    private BetViewModel betmodel;
+    private String currentUser ="1";
 
-    public MatchesFragment(){}
+    public BetsFragment(){}
 
 
 
-    public static MatchesFragment getInstance(String pageTitle){
-        MatchesFragment fragment = new MatchesFragment();
+    public static BetsFragment getInstance(String pageTitle){
+        BetsFragment fragment = new BetsFragment();
         Bundle args = new Bundle();
         args.putString(PAGE_TITLE, pageTitle);
         fragment.setArguments(args);
@@ -93,7 +95,9 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
         super.onActivityCreated(savedInstanceState);
 
         viewModel = ViewModelProviders.of(this.getActivity()).get(JsonDataViewModel.class);
+        betmodel = ViewModelProviders.of(this).get(BetViewModel.class);
         viewModel.getLiveData().observe(this, liveData -> {
+            betmodel.getBets().observe(this, bets -> {
 
             List<String> teams = new ArrayList();
             for (co.edu.uninorte.betit.model.Team team : liveData.getTeams()){
@@ -106,37 +110,18 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             }
             this.stadiums = stadiums;
 
-            List<co.edu.uninorte.betit.model.Match> matches = createListOfMatches(liveData);
-            setMatchesOnFragment(matches);
-            setUpAdapterAndView(matches);
+            List<Match> bet_list = new ArrayList();
+            for (Match bet : bets){
+                if (bet.getUser().equals(currentUser)){
+                    if (bet.isBet()) {
+                        bet_list.add(bet);
+                    }
+                }
+            }
+            setUpAdapterAndView(bet_list);
 
 
-        });
-    }
-
-
-
-    private void setMatchesOnFragment(List<Match> matches) {
-
-
-
-
-    }
-
-    private List<Match> createListOfMatches(JsonData liveData) {
-        List<co.edu.uninorte.betit.model.Match> matches = new ArrayList();
-
-        matches.addAll(liveData.getGroups().getA().getMatches());
-        matches.addAll(liveData.getGroups().getB().getMatches());
-        matches.addAll(liveData.getGroups().getC().getMatches());
-        matches.addAll(liveData.getGroups().getD().getMatches());
-        matches.addAll(liveData.getGroups().getE().getMatches());
-        matches.addAll(liveData.getGroups().getF().getMatches());
-        matches.addAll(liveData.getGroups().getG().getMatches());
-        matches.addAll(liveData.getGroups().getH().getMatches());
-
-        Collections.sort(matches);
-        return matches;
+        });});
     }
 
 
@@ -175,7 +160,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     }
 
     @Override
-    public void setUpAdapterAndView(List<co.edu.uninorte.betit.model.Match> matches) {
+    public void setUpAdapterAndView(List<Match> matches) {
         this.matches = matches;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(this.getContext(),LinearLayoutManager.VERTICAL));
@@ -237,7 +222,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, int position) {
-            co.edu.uninorte.betit.model.Match currentMatch = matches.get(position);
+            Match currentMatch = matches.get(position);
 
             holder.team1text.setText(
                     teams.get(currentMatch.getHomeTeam()-1)
@@ -257,6 +242,9 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             holder.team2Flag.setBackground(
                     getResources().getDrawable(flags.get(currentMatch.getAwayTeam()))
             );
+            holder.team1score.setText(String.valueOf(currentMatch.getHomeResult()));
+            holder.team2score.setText(String.valueOf(currentMatch.getAwayResult()));
+            holder.container.setBackgroundColor(getResources().getColor(R.color.gray_200));
         }
 
         @Override
@@ -275,6 +263,9 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             private ImageView team1Flag;
             private ImageView team2Flag;
 
+            private TextView team1score;
+            private TextView team2score;
+
 
 
 
@@ -286,6 +277,8 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 this.container = matchView.findViewById(R.id.root_list_match);
                 this.team1Flag = matchView.findViewById(R.id.team1_flag);
                 this.team2Flag = matchView.findViewById(R.id.team2_flag);
+                this.team1score = matchView.findViewById(R.id.team1_score);
+                this.team2score = matchView.findViewById(R.id.team2_score);
 
                 this.dateText  = matchView.findViewById(R.id.dateText);
                 this.container.setOnClickListener(this);

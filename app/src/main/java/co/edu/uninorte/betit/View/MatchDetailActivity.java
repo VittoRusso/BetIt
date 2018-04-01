@@ -50,6 +50,7 @@ public class MatchDetailActivity extends AppCompatActivity {
     //Las variables
     private List<Match> data;
     private BetViewModel betmodel;
+    private boolean isAdmin = false;
     //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
 
     @Override
@@ -86,8 +87,6 @@ public class MatchDetailActivity extends AppCompatActivity {
         //Para Editar a la base de datos
         //Es lo mismo que agregar nada mas coges el objeto y lo agregas con el mismo primary key
         //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
-
-
 
 
         this.homeTeam = teams.get(match.getHomeTeam()-1);
@@ -196,6 +195,16 @@ public class MatchDetailActivity extends AppCompatActivity {
                             textAlignment(TEXT_ALIGNMENT_CENTER);
                             onClick(v-> Submit());
                         });
+                        button(()->{
+                            size(MATCH,WRAP);
+                            textSize(dip(24));
+                            gravity(CENTER_HORIZONTAL);
+                            text("Go back");
+                            textAlignment(TEXT_ALIGNMENT_CENTER);
+                            onClick(v-> finish());
+                        });
+
+
 
                         textView(()-> {
                             size(MATCH,WRAP);
@@ -213,14 +222,14 @@ public class MatchDetailActivity extends AppCompatActivity {
         Match current_match = matches.get(match_id);
 
         Match bet = new Match();
-        bet.setHomeTeam(current_match.getHomeTeam()-1);
-        bet.setAwayTeam(current_match.getAwayTeam()-1);
+        bet.setHomeTeam(current_match.getHomeTeam());
+        bet.setAwayTeam(current_match.getAwayTeam());
         bet.setHomeResult(homeScore);
         bet.setAwayResult(awayScore);
         bet.setUser("1");
         bet.setDate(current_match.getDate());
         bet.setStadium(current_match.getStadium());//idk
-        bet.setBet(true);
+        bet.setBet(!this.isAdmin);
         bet.setFinished(true);
         betmodel.addBet(bet);
         finish();
