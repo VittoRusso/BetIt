@@ -1,13 +1,11 @@
 package co.edu.uninorte.betit.dependencyinjection;
 
-
-import android.app.Fragment;
-
 import javax.inject.Singleton;
 
 import co.edu.uninorte.betit.View.BetsFragment;
 import co.edu.uninorte.betit.View.LoginFragment;
 import co.edu.uninorte.betit.View.MatchesFragment;
+import co.edu.uninorte.betit.View.ProfileFragment;
 import dagger.Component;
 
 @Singleton
@@ -19,4 +17,6 @@ public interface ApplicationComponent {
     void inject(BetsFragment fragment);
 
     void inject(LoginFragment loginFragment);
+
+    void inject(ProfileFragment profileFragment);
 }

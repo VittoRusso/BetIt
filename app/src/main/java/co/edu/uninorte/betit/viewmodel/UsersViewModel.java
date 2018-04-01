@@ -74,4 +74,25 @@ public class UsersViewModel extends AndroidViewModel {
             super.onPostExecute(result);
         }
     }
+
+    public Integer checkRegister(String email){
+        try{
+            Integer count = new CheckRegisterTask().execute(email).get();
+            return count;
+        }catch (Exception e){
+            return 99;
+        }
+    }
+
+    private class CheckRegisterTask extends AsyncTask <String, Void, Integer>{
+        @Override
+        protected Integer doInBackground(String... item){
+            return appDatabase.userDao().checkRegister(item[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+        }
+    }
 }

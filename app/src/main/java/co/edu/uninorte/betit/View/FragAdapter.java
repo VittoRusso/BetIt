@@ -1,11 +1,16 @@
 package co.edu.uninorte.betit.View;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import java.util.ArrayList;
 
+import co.edu.uninorte.betit.R;
 import co.edu.uninorte.betit.model.Match;
 
 /**
@@ -16,14 +21,26 @@ import co.edu.uninorte.betit.model.Match;
 
 public class FragAdapter extends FragmentPagerAdapter {
 
-    public FragAdapter(FragmentManager manager){
-        super(manager);
-    }
-    MatchesFragment matchesFragment;
 
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private boolean isLogged;
+    MatchesFragment matchesFragment;
+    private Context context;
+    private final FragmentManager mFragmentManager;
+
+    public FragAdapter(FragmentManager fm, Context c) {
+        super(fm);
+        mFragmentManager = fm;
+        context = c;
+    }
 
     @Override
     public Fragment getItem(int position) {
+        sharedPref = context.getSharedPreferences(context.getString(R.string.preferenceKey),Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        isLogged = sharedPref.getBoolean(context.getString(R.string.isLoginKey),false);
+        Log.v("TAG",isLogged+"");
         switch (position){
             case 0:
                 MatchesFragment matchesFragment = MatchesFragment.getInstance(ViewPagerActivity.pageTitles[position]);

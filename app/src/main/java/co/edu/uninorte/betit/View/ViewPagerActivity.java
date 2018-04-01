@@ -44,11 +44,15 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
         tabLayout.setBackgroundColor(ContextCompat.getColor(this,R.color.primary));
         tabLayout.addOnTabSelectedListener(this);
 
-        FragAdapter adapter = new FragAdapter(getSupportFragmentManager());
+        FragAdapter adapter = new FragAdapter(getSupportFragmentManager(),getApplicationContext());
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(pager);
         tabLayout.addOnTabSelectedListener(this);
+    }
+
+    public void dataChanged() {
+        pager.getAdapter().notifyDataSetChanged();
     }
 
 

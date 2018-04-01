@@ -21,6 +21,9 @@ public interface UserDao {
     @Query("Select COUNT(*) from `user` where email =:email AND password =:pass")
     Integer checkUser (String email, String pass);
 
+    @Query("Select COUNT(*) from `user` where email =:email")
+    Integer checkRegister (String email);
+
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insertUser (User user);
 
