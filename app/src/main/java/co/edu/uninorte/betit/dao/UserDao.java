@@ -27,7 +27,14 @@ public interface UserDao {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insertUser (User user);
 
+    @Query("Update `user` Set score = score + 3 Where email = :email")
+    void addThreeScore (String email);
+
+    @Query("Update `user` Set score = score + 1 Where email = :email")
+    void addOneScore (String email);
+
     @Delete
     void deleteUser (User user);
+
 
 }

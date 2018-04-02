@@ -67,6 +67,7 @@ public class LoginFragment extends Fragment {
         userModel = ViewModelProviders.of(this).get(UsersViewModel.class);
         sharedPref = getActivity().getSharedPreferences(getString(R.string.preferenceKey),Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+        register("admin","admin");
     }
 
     @Override

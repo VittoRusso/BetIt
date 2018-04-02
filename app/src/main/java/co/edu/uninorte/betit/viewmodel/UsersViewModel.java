@@ -95,4 +95,28 @@ public class UsersViewModel extends AndroidViewModel {
             super.onPostExecute(result);
         }
     }
+
+    public void addThree (String email){
+        new AddThreeTask().execute(email);
+    }
+
+    private class AddThreeTask extends AsyncTask <String, Void, Void>{
+        @Override
+        protected Void doInBackground(String... item){
+            appDatabase.userDao().addThreeScore(item[0]);
+            return null;
+        }
+    }
+
+    public void addOne (String email){
+        new AddOneTask().execute(email);
+    }
+
+    private class AddOneTask extends AsyncTask <String, Void, Void>{
+        @Override
+        protected Void doInBackground(String... item){
+            appDatabase.userDao().addOneScore(item[0]);
+            return null;
+        }
+    }
 }
