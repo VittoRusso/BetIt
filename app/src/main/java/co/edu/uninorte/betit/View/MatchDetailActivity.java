@@ -244,7 +244,7 @@ public class MatchDetailActivity extends AppCompatActivity {
             bet.setStadium(current_match.getStadium());//idk
             bet.setBet(!this.isAdmin);
             bet.setFinished(this.isAdmin);
-            betmodel.addBet(bet);
+            addOrReplace(bet);
 
             finish();
             Toast.makeText(getApplicationContext(), "Submitted.", Toast.LENGTH_SHORT).show();}
@@ -253,6 +253,20 @@ public class MatchDetailActivity extends AppCompatActivity {
         }else{
             Toast.makeText(getApplicationContext(), "You need to log in to place a bet", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void addOrReplace(Match bet) {
+        for (Match currentbet: this.data){
+            if (currentbet.getHomeTeam() == bet.getHomeTeam()){
+                if (currentbet.getAwayTeam() == bet.getAwayTeam()){
+                    if(bet.isFinished() && currentbet.isFinished()){
+                        bet.setUid(currentbet.getUid());
+                        break;
+                    }
+                }
+            }
+        }
+        betmodel.addBet(bet);
     }
 }
 

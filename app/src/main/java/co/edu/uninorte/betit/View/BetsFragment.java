@@ -110,11 +110,23 @@ public class BetsFragment extends Fragment implements MatchViewInterface{
             }
             this.stadiums = stadiums;
 
-
+            Collections.sort(bets);
             setUpAdapterAndView(bets);
 
 
         });});
+    }
+
+
+
+    private List<Match> removeBets(List<Match> betsnResults) {
+        List<Match> results = new ArrayList();
+        for (Match match : betsnResults){
+            if (!match.isBet()){
+                results.add(match);
+            }
+        }
+        return results;
     }
 
 
