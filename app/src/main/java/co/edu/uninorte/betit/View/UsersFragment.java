@@ -103,9 +103,16 @@ public class UsersFragment extends Fragment {
         viewModel = ViewModelProviders.of(this.getActivity()).get(JsonDataViewModel.class);
         usersViewModel = ViewModelProviders.of(this.getActivity()).get(UsersViewModel.class);
         usersViewModel.getUsers().observe(this, liveData -> {
+            //Sorts data in terms of score
+            Collections.sort(liveData);
+            List<User> users = liveData;
+            for (User user: liveData){
+                if (user.getEmail().equals("admin")){
+                    users.remove((user));
+                }
+            }
 
-
-            setUpAdapterAndView(liveData);
+            setUpAdapterAndView(users);
         });
     }
 

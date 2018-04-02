@@ -3,12 +3,13 @@ package co.edu.uninorte.betit.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity (tableName = "user")
-public class User {
+public class User implements Comparable<User> {
 
     @PrimaryKey (autoGenerate = true)
     private int key;
@@ -48,5 +49,11 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    @Override
+    public int compareTo(@NonNull User user) {
+        return Integer.compare(user.getScore(), this.getScore());
     }
 }

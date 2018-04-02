@@ -217,7 +217,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                                         gravity(CENTER_HORIZONTAL);
                                         text(stadiums.get(match.getStadium() - 1));
                                     });
-                                        if(!matches.get(match_id).isFinished()) {
+                                        if(isAdmin || !matches.get(match_id).isFinished()) {
                                             button(() -> {
                                                 size(MATCH, WRAP);
                                                 textSize(dip(24));
