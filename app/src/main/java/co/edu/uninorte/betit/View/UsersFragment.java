@@ -106,9 +106,10 @@ public class UsersFragment extends Fragment {
             //Sorts data in terms of score
             Collections.sort(liveData);
             List<User> users = liveData;
-            for (User user: liveData){
-                if (user.getEmail().equals("admin")){
-                    users.remove((user));
+            for (int i = 0; i< users.size(); i++){
+                User currentUser = users.get(i);
+                if (currentUser.getEmail().equals("admin")){
+                    users.remove(currentUser);
                 }
             }
 
