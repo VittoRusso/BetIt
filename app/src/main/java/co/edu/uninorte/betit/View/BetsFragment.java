@@ -3,6 +3,7 @@ package co.edu.uninorte.betit.View;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -59,6 +60,8 @@ public class BetsFragment extends Fragment implements MatchViewInterface{
     JsonDataViewModel viewModel;
     private BetViewModel betmodel;
     private String currentUser ="1";
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
 
     public BetsFragment(){}
 
@@ -98,6 +101,11 @@ public class BetsFragment extends Fragment implements MatchViewInterface{
         betmodel = ViewModelProviders.of(this).get(BetViewModel.class);
         viewModel.getLiveData().observe(this, liveData -> {
             betmodel.getBets().observe(this, bets -> {
+
+            sharedPref = getContext().getSharedPreferences(getContext().getString(R.string.preferenceKey), Context.MODE_PRIVATE);
+            editor = sharedPref.edit();
+            this.currentUser = sharedPref.getString(getContext().getString(R.string.emailKey),"");
+
 
             List<String> teams = new ArrayList();
             for (co.edu.uninorte.betit.model.Team team : liveData.getTeams()){
@@ -254,11 +262,16 @@ public class BetsFragment extends Fragment implements MatchViewInterface{
             if (currentMatch.isBet()){
                 //Bets are gray
                 holder.container.setBackgroundColor(getResources().getColor(R.color.gray_200));
+
             }
             else {
                 //Results are yellow
                 holder.container.setBackgroundColor(getResources().getColor(R.color.yellow_200));
             }
+            if (currentMatch.getUser().equals(currentUser)){
+                holder.container.setBackgroundColor(getResources().getColor(R.color.blue_100));
+            }
+
         }
 
         @Override
