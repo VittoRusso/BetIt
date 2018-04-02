@@ -344,6 +344,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                         if(win2<0){
                             tieWins++;
                         }
+
                     }
                 }
             }
