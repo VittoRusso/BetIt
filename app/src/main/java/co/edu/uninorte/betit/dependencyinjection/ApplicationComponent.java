@@ -20,8 +20,9 @@ public interface ApplicationComponent {
 
     void inject(BetsFragment fragment);
 
-
     void inject(ProfileFragment profileFragment);
+
+    void inject(LoginFragment loginFragment);
 
     void inject(UsersFragment usersFragment);
 }

@@ -110,15 +110,8 @@ public class BetsFragment extends Fragment implements MatchViewInterface{
             }
             this.stadiums = stadiums;
 
-            List<Match> bet_list = new ArrayList();
-            for (Match bet : bets){
-                if (bet.getUser().equals(currentUser)){
-                    if (bet.isBet()) {
-                        bet_list.add(bet);
-                    }
-                }
-            }
-            setUpAdapterAndView(bet_list);
+
+            setUpAdapterAndView(bets);
 
 
         });});
@@ -242,9 +235,18 @@ public class BetsFragment extends Fragment implements MatchViewInterface{
             holder.team2Flag.setBackground(
                     getResources().getDrawable(flags.get(currentMatch.getAwayTeam()))
             );
+
             holder.team1score.setText(String.valueOf(currentMatch.getHomeResult()));
             holder.team2score.setText(String.valueOf(currentMatch.getAwayResult()));
-            holder.container.setBackgroundColor(getResources().getColor(R.color.gray_200));
+
+            if (currentMatch.isBet()){
+                //Bets are gray
+                holder.container.setBackgroundColor(getResources().getColor(R.color.gray_200));
+            }
+            else {
+                //Results are yellow
+                holder.container.setBackgroundColor(getResources().getColor(R.color.yellow_200));
+            }
         }
 
         @Override

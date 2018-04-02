@@ -1,5 +1,6 @@
 package co.edu.uninorte.betit.View;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +29,9 @@ import co.edu.uninorte.betit.R;
 import co.edu.uninorte.betit.model.JsonData;
 import co.edu.uninorte.betit.model.Match;
 import co.edu.uninorte.betit.model.Stadium;
+import co.edu.uninorte.betit.model.User;
 import co.edu.uninorte.betit.viewmodel.JsonDataViewModel;
+import co.edu.uninorte.betit.viewmodel.UsersViewModel;
 
 /**
  * Created by Gabriel on 11/03/2018.
@@ -52,11 +55,16 @@ public class UsersFragment extends Fragment {
     private List<String> stadiums;
 
 
+
+
     private LayoutInflater layoutInflater;
     private RecyclerView recyclerView;
     private MatchAdapter matchAdapter;
 
     JsonDataViewModel viewModel;
+
+    UsersViewModel usersViewModel;
+    private List<User> users;
 
     public UsersFragment(){}
 
@@ -93,51 +101,19 @@ public class UsersFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         viewModel = ViewModelProviders.of(this.getActivity()).get(JsonDataViewModel.class);
-        viewModel.getLiveData().observe(this, liveData -> {
-
-            List<String> teams = new ArrayList();
-            for (co.edu.uninorte.betit.model.Team team : liveData.getTeams()){
-                teams.add(team.getName());
-            }
-            this.teams = teams;
-            List<String> stadiums = new ArrayList();
-            for (Stadium stadium: liveData.getStadiums()){
-                stadiums.add(stadium.getName());
-            }
-            this.stadiums = stadiums;
-
-            List<Match> matches = createListOfMatches(liveData);
-            setMatchesOnFragment(matches);
-            setUpAdapterAndView(matches);
+        usersViewModel = ViewModelProviders.of(this.getActivity()).get(UsersViewModel.class);
+        usersViewModel.getUsers().observe(this, liveData -> {
 
 
+            setUpAdapterAndView(liveData);
         });
     }
 
 
 
-    private void setMatchesOnFragment(List<Match> matches) {
 
 
 
-
-    }
-
-    private List<Match> createListOfMatches(JsonData liveData) {
-        List<Match> matches = new ArrayList();
-
-        matches.addAll(liveData.getGroups().getA().getMatches());
-        matches.addAll(liveData.getGroups().getB().getMatches());
-        matches.addAll(liveData.getGroups().getC().getMatches());
-        matches.addAll(liveData.getGroups().getD().getMatches());
-        matches.addAll(liveData.getGroups().getE().getMatches());
-        matches.addAll(liveData.getGroups().getF().getMatches());
-        matches.addAll(liveData.getGroups().getG().getMatches());
-        matches.addAll(liveData.getGroups().getH().getMatches());
-
-        Collections.sort(matches);
-        return matches;
-    }
 
 
     @Override
@@ -165,8 +141,8 @@ public class UsersFragment extends Fragment {
     }
 
 
-    public void setUpAdapterAndView(List<Match> matches) {
-        this.matches = matches;
+    public void setUpAdapterAndView(List<User> users) {
+        this.users = users;
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(this.getContext(),LinearLayoutManager.VERTICAL));
         matchAdapter = new MatchAdapter();
@@ -191,23 +167,23 @@ public class UsersFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CustomViewHolder holder, int position) {
-            Match currentMatch = matches.get(position);
+            User currentUser = users.get(position);
 
             holder.email.setText(
-                    teams.get(currentMatch.getHomeTeam()-1)
+                    currentUser.getEmail()
             );
             holder.position.setText(
                     String.valueOf(position+1)
             );
             holder.score.setText(
-                    String.valueOf(position)
+                    String.valueOf(currentUser.getScore())
             );
 
         }
 
         @Override
         public int getItemCount() {
-            return matches.size();
+            return users.size();
         }
 
         class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

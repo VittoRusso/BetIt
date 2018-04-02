@@ -2,6 +2,7 @@ package co.edu.uninorte.betit.View;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import co.edu.uninorte.betit.R;
 import co.edu.uninorte.betit.model.JsonData;
 import co.edu.uninorte.betit.model.Match;
 import co.edu.uninorte.betit.model.Stadium;
+import co.edu.uninorte.betit.viewmodel.BetViewModel;
 import co.edu.uninorte.betit.viewmodel.JsonDataViewModel;
 import co.edu.uninorte.betit.BetItApplication;
 
@@ -57,6 +59,7 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
     private MatchAdapter matchAdapter;
 
     JsonDataViewModel viewModel;
+    BetViewModel betsModel;
 
     public MatchesFragment(){}
 
@@ -93,35 +96,56 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
         super.onActivityCreated(savedInstanceState);
 
         viewModel = ViewModelProviders.of(this.getActivity()).get(JsonDataViewModel.class);
+        betsModel = ViewModelProviders.of(this.getActivity()).get(BetViewModel.class);
         viewModel.getLiveData().observe(this, liveData -> {
+            betsModel.getBets().observe(this, bets -> {
+                List<String> teams = new ArrayList();
+                for (co.edu.uninorte.betit.model.Team team : liveData.getTeams()) {
+                    teams.add(team.getName());
+                }
+                this.teams = teams;
+                List<String> stadiums = new ArrayList();
+                for (Stadium stadium : liveData.getStadiums()) {
+                    stadiums.add(stadium.getName());
+                }
+                this.stadiums = stadiums;
 
-            List<String> teams = new ArrayList();
-            for (co.edu.uninorte.betit.model.Team team : liveData.getTeams()){
-                teams.add(team.getName());
-            }
-            this.teams = teams;
-            List<String> stadiums = new ArrayList();
-            for (Stadium stadium: liveData.getStadiums()){
-                stadiums.add(stadium.getName());
-            }
-            this.stadiums = stadiums;
+                List<Match> matches = createListOfMatches(liveData);
+                List<Match> betsnResults = bets;
 
-            List<co.edu.uninorte.betit.model.Match> matches = createListOfMatches(liveData);
-            setMatchesOnFragment(matches);
-            setUpAdapterAndView(matches);
+                matches = replaceResults(matches, betsnResults);
+                setUpAdapterAndView(matches);
 
 
+            });
         });
     }
 
-
-
-    private void setMatchesOnFragment(List<Match> matches) {
-
-
-
-
+    private List<Match> replaceResults(List<Match> matches, List<Match> betsnResults) {
+        List<Match> results = removeBets(betsnResults);
+        for (int i = 0; i < matches.size();i++){
+            Match match = matches.get(i);
+            for (Match result: results){
+                //Checks hometeam and date for identity (The same team cannot play two games in a single day)
+                if ((result.getHomeTeam() == match.getHomeTeam()) && match.getDate().equals(result.getDate())){
+                    matches.set(i,result);
+                }
+            }
+        }
+        return matches;
     }
+
+    // Con el api 24 (y no 21) esto se puede hacer en una linea, :(
+    private List<Match> removeBets(List<Match> betsnResults) {
+        List<Match> results = new ArrayList();
+        for (Match match : betsnResults){
+            if (!match.isBet()){
+                results.add(match);
+            }
+        }
+        return results;
+    }
+
 
     private List<Match> createListOfMatches(JsonData liveData) {
         List<co.edu.uninorte.betit.model.Match> matches = new ArrayList();
@@ -257,6 +281,16 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             holder.team2Flag.setBackground(
                     getResources().getDrawable(flags.get(currentMatch.getAwayTeam()))
             );
+
+            holder.team1score.setText(
+                    String.valueOf(currentMatch.getHomeResult())
+            );
+            holder.team2score.setText(
+                    String.valueOf(currentMatch.getAwayResult())
+            );
+            if (currentMatch.isFinished()){
+                holder.container.setBackgroundColor(getResources().getColor(R.color.yellow_200));
+            }
         }
 
         @Override
@@ -275,6 +309,8 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
             private ImageView team1Flag;
             private ImageView team2Flag;
 
+            private TextView team1score;
+            private TextView team2score;
 
 
 
@@ -286,7 +322,8 @@ public class MatchesFragment extends Fragment implements MatchViewInterface{
                 this.container = matchView.findViewById(R.id.root_list_match);
                 this.team1Flag = matchView.findViewById(R.id.team1_flag);
                 this.team2Flag = matchView.findViewById(R.id.team2_flag);
-
+                this.team1score = matchView.findViewById(R.id.team1_score);
+                this.team2score = matchView.findViewById(R.id.team2_score);
                 this.dateText  = matchView.findViewById(R.id.dateText);
                 this.container.setOnClickListener(this);
             }
