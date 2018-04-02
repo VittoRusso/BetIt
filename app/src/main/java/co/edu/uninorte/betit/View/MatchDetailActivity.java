@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.uninorte.betit.R;
@@ -45,12 +46,17 @@ public class MatchDetailActivity extends AppCompatActivity {
     private Match match;
     private int betNo;
 
+    public ArrayList<Integer> finished_matches;
 
+
+
+    private boolean isAdmin = false;
+    private boolean isLogin = false;
     //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
     //Las variables
     private List<Match> data;
     private BetViewModel betmodel;
-    private boolean isAdmin = false;
+
     //------------------- CODIGO EJEMPLO PARA EL ROOMDATABASE DE LOS BETS ------------------------
 
     @Override
@@ -219,21 +225,27 @@ public class MatchDetailActivity extends AppCompatActivity {
     }
 
     private void Submit() {
-        Match current_match = matches.get(match_id);
 
-        Match bet = new Match();
-        bet.setHomeTeam(current_match.getHomeTeam());
-        bet.setAwayTeam(current_match.getAwayTeam());
-        bet.setHomeResult(homeScore);
-        bet.setAwayResult(awayScore);
-        bet.setUser("1");
-        bet.setDate(current_match.getDate());
-        bet.setStadium(current_match.getStadium());//idk
-        bet.setBet(!this.isAdmin);
-        bet.setFinished(true);
-        betmodel.addBet(bet);
-        finish();
-        Toast.makeText(getApplicationContext(), "Bet placed.",Toast.LENGTH_SHORT).show();
+        if (isLogin) {
+            Match current_match = matches.get(match_id);
+            if (!current_match.isFinished()){
+            Match bet = new Match();
+            bet.setHomeTeam(current_match.getHomeTeam());
+            bet.setAwayTeam(current_match.getAwayTeam());
+            bet.setHomeResult(homeScore);
+            bet.setAwayResult(awayScore);
+            bet.setUser("1");
+            bet.setDate(current_match.getDate());
+            bet.setStadium(current_match.getStadium());//idk
+            bet.setBet(!this.isAdmin);
+            bet.setFinished(!this.isAdmin);
+            betmodel.addBet(bet);
+            finish();
+            Toast.makeText(getApplicationContext(), "Bet placed.", Toast.LENGTH_SHORT).show();}
+            else{
+                Toast.makeText(getApplicationContext(), "This match is finished, pick another one to bet on", Toast.LENGTH_SHORT).show();}
+        }else{
+            Toast.makeText(getApplicationContext(), "You need to log in to place a bet", Toast.LENGTH_SHORT).show();
+        }
     }
-
 }

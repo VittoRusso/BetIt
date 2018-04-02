@@ -18,7 +18,7 @@ public class ViewPagerActivity extends AppCompatActivity implements TabLayout.On
 
     private ViewPager pager;
 
-    public static final String[] pageTitles = {"matches","bets","profile"};
+    public static final String[] pageTitles = {"matches","bets","profile","users"};
 
 
 

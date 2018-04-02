@@ -51,6 +51,9 @@ public class FragAdapter extends FragmentPagerAdapter {
             case 2:
                 LoginFragment loginFragment = LoginFragment.getInstance(ViewPagerActivity.pageTitles[position]);
                 return loginFragment;
+            case 3:
+                UsersFragment usersFragment = UsersFragment.getInstance(ViewPagerActivity.pageTitles[position]);
+                return usersFragment;
             default:
                 return ViewPagerItemFragment.getInstance(ViewPagerActivity.pageTitles[position]);
     }
